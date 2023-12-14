@@ -9,6 +9,7 @@ import UploadEvidenceModal from "./UploadEvidenceModal";
 import { storage } from "../../config/firebaseStorage";
 import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
+import { LuBird } from "react-icons/lu";
 
 type SubmitComplaintFormProps = {
   complaintId: number;
@@ -17,7 +18,9 @@ type SubmitComplaintFormProps = {
 const SubmitComplaintForm = ({ complaintId }: SubmitComplaintFormProps) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [filesToUpload, setFilesToUpload] = useState<File[]>([]);
-
+  const iconStyle = {
+    marginRight: "8px", // Space after the icon
+  };
   function handleUploadEvidenceButtonClick() {
     setModalVisible(true);
   }
@@ -54,11 +57,12 @@ const SubmitComplaintForm = ({ complaintId }: SubmitComplaintFormProps) => {
   return (
     <>
       <section>
+        <br />
         <h1 className='mx-4 flex items-center justify-center text-base font-bold md:justify-start md:text-lg lg:text-xl'>
-          --Submit Complaint?--
+        <LuBird  style={iconStyle} /> Wildlife Complaint Reporting
         </h1>
       </section>
-      <BlankLine />
+      
       <BlankLine />
       <section className='mx-4 lg:mx-2'>
         <ComplaintLocationInputField />

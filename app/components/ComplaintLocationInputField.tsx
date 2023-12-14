@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+
 import "./ComplaintLocationInputField.css";
 
 const ComplaintLocationInputField = () => {
@@ -15,13 +16,13 @@ const ComplaintLocationInputField = () => {
         <input
           type='text'
           id='complaintLocation'
-          className='flex h-16 w-full items-center justify-start rounded-lg border-2 border-gray-400 px-4'
+          className='flex h-16 w-full items-center justify-start rounded-lg border-2 border-black px-4'
           onFocus={handleFocus}
         />
         <label
           id='complaintLocationLabel'
           htmlFor='complaintLocation'
-          className='floating-label text-gray-500'
+          className='floating-label text-black'
         >
           &nbsp;Location&nbsp;
         </label>
