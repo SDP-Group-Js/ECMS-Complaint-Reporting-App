@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import { useState } from "react";
 import LogoutButton from "./LogoutButton";
-import NavBarCollapseButton from "../NavBarCollapseButton";
+import NavBarCollapseButton from "./NavBarCollapseButton";
 import styles from "./NavBar.module.css";
 
 const NavBar = () => {
