@@ -1,4 +1,4 @@
-import SubmitComplaintForm from "@/app/components/SubmitComplaintForm";
+import SubmitComplaintForm from "@/app/components/SubmitComplaintFormWl";
 import NavBar from "../components/NavBar";
 
 export default function Home() {
