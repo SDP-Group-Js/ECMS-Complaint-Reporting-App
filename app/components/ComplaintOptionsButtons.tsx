@@ -3,6 +3,7 @@ import React from "react";
 import { MdOutlineForest } from "react-icons/md";
 import { LuBird } from "react-icons/lu";
 import { TiLeaf } from "react-icons/ti";
+import Link from "next/link";
 
 const Button = () => {
   const iconStyle = {
@@ -18,29 +19,56 @@ const Button = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <button className="flex items-center text-md font-bold text-black md:text-xl lg:text-xl rounded-md border border-black hover:border-slate-400 p-4 my-2" style={fixedWidthStyle}>
-        <MdOutlineForest style={iconStyle} />
-        <span style={textWithSpaceStyle}>Forestry Complaint</span>
-      </button>
-     
-      <button className="flex items-center text-md font-bold text-black md:text-md lg:text-xl rounded-md border border-black hover:border-slate-400 p-4 my-2" style={fixedWidthStyle}>
-        <LuBird style={iconStyle} />
-        <span style={textWithSpaceStyle}>Wildlife Complaint</span>
-      </button>
-     
-      <button className="flex items-center text-md font-bold text-black md:text-md lg:text-xl rounded-md border border-black hover:border-slate-400 p-4 my-2" style={fixedWidthStyle}>
-        <TiLeaf style={iconStyle} />
-        <span style={textWithSpaceStyle}>General Complaint</span>
-      </button>
+    <div className='flex flex-col items-center justify-center h-screen'>
+      {complaintTypeCard(
+        fixedWidthStyle,
+        iconStyle,
+        textWithSpaceStyle,
+        "Forestry Complaint",
+        <MdOutlineForest />,
+        "../submit-forestry-complaint"
+      )}
+
+      {complaintTypeCard(
+        fixedWidthStyle,
+        iconStyle,
+        textWithSpaceStyle,
+        "Wildlife Complaint",
+        <LuBird />,
+        "../submit-wildlife-complaint"
+      )}
+
+      {complaintTypeCard(
+        fixedWidthStyle,
+        iconStyle,
+        textWithSpaceStyle,
+        "General Complaint",
+        <TiLeaf />,
+        "../submit-general-complaint"
+      )}
     </div>
   );
 };
 
 export default Button;
-
-
-
-
-
-
+function complaintTypeCard(
+  fixedWidthStyle: { width: string },
+  iconStyle: { marginRight: string },
+  textWithSpaceStyle: { marginRight: string },
+  content: string,
+  icon: React.ReactNode,
+  link: string
+) {
+  return (
+    <button style={fixedWidthStyle}>
+      <Link
+        href={link}
+        className='flex items-center text-md font-bold text-black md:text-xl lg:text-xl rounded-md border border-black hover:border-slate-400 p-4 my-2'
+      >
+        {icon &&
+          React.cloneElement(icon as React.ReactElement, { style: iconStyle })}
+        <span style={textWithSpaceStyle}>{content}</span>
+      </Link>
+    </button>
+  );
+}
