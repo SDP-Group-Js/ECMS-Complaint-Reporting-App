@@ -17,8 +17,8 @@ export default function Home({ params }: ViewComplaintParams) {
       <BlankLine />
       <main>
         <ComplaintCard
-          complaintId={0}
-          complaintStatus='Recorded'
+          complaintId={complaintId}
+          complaintStatus='Resolved'
           complaintDate={new Date()}
         />
       </main>
