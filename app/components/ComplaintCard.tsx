@@ -66,7 +66,6 @@ const ComplaintCard = async ({
       <div className='flex justify-start items-center mx-1'>
         <ActionDataRow actionId={4} actionName='[Action Taken]' />
       </div>
-      <BlankLine />
     </section>
   );
 };
