@@ -26,7 +26,7 @@ const ComplaintCard = async ({
 
   return (
     <section className='my-2 mx-2 rounded-lg border-2 border-gray-400 px-2 py-2 text-base text-gray-600 lg:mx-2 lg:text-lg'>
-      <div className='flex items-center text-base font-bold md:text-lg lg:text-xl justify-between md:justify-start'>
+      <div className='flex items-center justify-between text-base md:text-lg lg:text-xl font-bold md:justify-start'>
         <div className='mx-2'>C{formatComplaintId(complaintId, 3)}</div>
         <div className='mx-2'>
           <ComplaintStatusTag status={complaintStatus} />
@@ -36,16 +36,10 @@ const ComplaintCard = async ({
 
       <BlankLine />
 
-      <div className='hidden md:block'>
-        <BlankLine />
-      </div>
       <div className='flex justify-start items-center font-bold text-base md:text:lg lg:text-xl'>
-        <h2 className='flex w-full justify-center text-lg font-bold mx-1 mt-2 md:mt-0 md:justify-start'>
-          <span>Actions Taken</span>
+        <h2 className='flex justify-center w-full lg:justify-start text-lg font-bold mx-1 mt-2 lg:mt-0'>
+          Actions Taken
         </h2>
-      </div>
-      <div className='hidden md:block'>
-        <BlankLine />
       </div>
 
       <BlankLine />
@@ -53,9 +47,7 @@ const ComplaintCard = async ({
       <h3 className='flex justify-start text-lg font-bold mx-1'>
         [Stage Name]
       </h3>
-
       <BlankLine />
-
       <div className='flex justify-start items-center mx-1'>
         <ActionDataRow actionId={0} actionName='[Action Taken]' />
       </div>
@@ -65,18 +57,16 @@ const ComplaintCard = async ({
       <div className='flex justify-start items-center mx-1'>
         <ActionDataRow actionId={3} actionName='[Action Taken]' />
       </div>
-
       <BlankLine />
 
       <h3 className='flex justify-start text-lg font-bold mx-1'>
         [Stage Name]
       </h3>
-
       <BlankLine />
-
       <div className='flex justify-start items-center mx-1'>
-        <ActionDataRow actionId={0} actionName='[Action Taken]' />
+        <ActionDataRow actionId={4} actionName='[Action Taken]' />
       </div>
+      <BlankLine />
     </section>
   );
 };
