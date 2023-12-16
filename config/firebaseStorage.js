@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { ref } from "firebase/storage";
 
@@ -18,3 +19,4 @@ export const storage = getStorage(app);
 const storageRef = ref(storage);
 
 export const actionEvidenceRef = ref(storage, "action-evidence/");
+export const auth = getAuth(app);
