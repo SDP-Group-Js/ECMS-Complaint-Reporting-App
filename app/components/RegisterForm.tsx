@@ -12,7 +12,6 @@ export default function RegisterForm() {
   const [password, setPassword] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [nic, setNic] = useState("");
-  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -26,7 +25,7 @@ export default function RegisterForm() {
     e.preventDefault();
 
     if (!name || !email || !password || !phoneNumber || !nic) {
-      setError("All fields are necessary.");
+      alert("All fields are neccessary!");
       return;
     }
 
@@ -34,8 +33,8 @@ export default function RegisterForm() {
       await createUserWithEmailAndPassword(auth, email, password);
       alert("Registration Complete!");
       router.push("../report-complaint");
-    } catch (error) {
-      alert(error);
+    } catch (error: any) {
+      alert(error.message);
     }
   };
 
@@ -73,12 +72,6 @@ export default function RegisterForm() {
           <button className="cursor-pointer bg-green-600 px-6 py-2 font-bold text-white">
             Register
           </button>
-
-          {error && (
-            <div className="mt-2 w-fit rounded-md bg-red-500 px-3 py-1 text-sm text-white">
-              {error}
-            </div>
-          )}
 
           <Link
             className="mt-3 flex justify-center text-right text-sm"
