@@ -6,7 +6,7 @@ import ComplaintLocationInputField from "./ComplaintLocationInputField";
 import SubmitComplaintFinalButton from "./SubmitComplaintFinalButton";
 import UploadEvidenceButton from "./UploadEvidenceButton";
 import UploadEvidenceModal from "./UploadEvidenceModal";
-import { storage } from "../../config/firebaseStorage";
+import { storage } from "../../config/firebase";
 import { ref, uploadBytes } from "firebase/storage";
 import { v4 } from "uuid";
 import { MdOutlineForest } from "react-icons/md";
@@ -46,7 +46,7 @@ const SubmitComplaintForm = ({ complaintId }: SubmitComplaintFormProps) => {
     filesToUpload.forEach((file) => {
       const complaintEvidenceRef = ref(
         storage,
-        `complaint-evidence/${complaintId}/${file.name + v4()}`
+        `complaint-evidence/${complaintId}/${file.name + v4()}`,
       );
       uploadBytes(complaintEvidenceRef, file).then(() => {
         alert("Uploaded successfully");
@@ -58,16 +58,16 @@ const SubmitComplaintForm = ({ complaintId }: SubmitComplaintFormProps) => {
     <>
       <section>
         <br />
-        <h1 className='mx-4 flex items-center justify-center text-base font-bold md:justify-start md:text-lg lg:text-xl'>
-        <MdOutlineForest style={iconStyle} /> Forestry Complaint Reporting
+        <h1 className="mx-4 flex items-center justify-center text-base font-bold md:justify-start md:text-lg lg:text-xl">
+          <MdOutlineForest style={iconStyle} /> Forestry Complaint Reporting
         </h1>
       </section>
-      
+
       <BlankLine />
-      <section className='mx-4 lg:mx-2'>
+      <section className="mx-4 lg:mx-2">
         <ComplaintLocationInputField />
         <BlankLine />
-        <div className='flex items-center justify-center'>
+        <div className="flex items-center justify-center">
           <UploadEvidenceButton handleClick={handleUploadEvidenceButtonClick} />
         </div>
         {/* <div className="flex items-center justify-center">
@@ -77,7 +77,7 @@ const SubmitComplaintForm = ({ complaintId }: SubmitComplaintFormProps) => {
         <ComplaintDetailsInputField />
         <BlankLine />
         <BlankLine />
-        <div className='flex items-center justify-center'>
+        <div className="flex items-center justify-center">
           <SubmitComplaintFinalButton
             complaintId={complaintId}
             onClick={handleSubmitComplaintFinalButtonClick}

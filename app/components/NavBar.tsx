@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton";
 import NavBarCollapseButton from "./NavBarCollapseButton";
 import styles from "./NavBar.module.css";
 import { useRouter } from "next/navigation";
-import { auth } from "@/config/firebaseStorage";
+import { auth } from "@/config/firebase";
 import { signOut } from "firebase/auth";
 
 const NavBar = () => {

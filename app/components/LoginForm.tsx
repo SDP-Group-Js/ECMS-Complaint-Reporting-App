@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { auth } from "@/config/firebaseStorage";
+import { auth } from "@/config/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 
 import Link from "next/link";
@@ -9,6 +9,7 @@ export default function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isComponentMounted, setComponentMounted] = useState(false);
 
   const router = useRouter();
 
@@ -17,7 +18,7 @@ export default function LoginForm() {
     if (user) {
       router.push("../report-complaint");
     }
-  });
+  }, []);
 
   const login = async (e: any) => {
     e.preventDefault();
@@ -64,7 +65,7 @@ export default function LoginForm() {
 
           <Link
             className="mt-3 flex justify-center text-right text-sm"
-            href={"./register"}
+            href={"../register"}
           >
             Don't have an account?&nbsp;
             <span className="underline">Register</span>
