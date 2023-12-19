@@ -11,15 +11,15 @@ interface ViewComplaintParams {
 export default function Home({ params }: ViewComplaintParams) {
   const complaintId = params.id;
   return (
-    <div className='sticky top-0'>
+    <div className="sticky top-0">
       <NavBar />
       <BlankLine />
       <BlankLine />
       <main>
         <ComplaintCard
           complaintId={complaintId}
-          complaintStatus='Resolved'
-          complaintDate={new Date()}
+          complaintStatus="Resolved"
+          complaintTitle={"Sample Title"}
         />
       </main>
     </div>

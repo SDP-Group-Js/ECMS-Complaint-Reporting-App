@@ -6,7 +6,7 @@ import LogoutButton from "./LogoutButton";
 import NavBarCollapseButton from "./NavBarCollapseButton";
 import styles from "./NavBar.module.css";
 import { useRouter } from "next/navigation";
-import { auth } from "@/config/firebaseStorage";
+import { auth } from "@/config/firebase";
 import { signOut } from "firebase/auth";
 
 const NavBar = () => {
@@ -48,7 +48,7 @@ const NavBar = () => {
           <NavBarCollapseButton onClick={handleCollapse} />
         </div>
         <div className="hidden md:block">
-          <LogoutButton />
+          <LogoutButton onClick={handleLogout} />
         </div>
       </div>
       <div
