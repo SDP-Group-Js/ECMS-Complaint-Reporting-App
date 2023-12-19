@@ -48,7 +48,7 @@ const NavBar = () => {
           <NavBarCollapseButton onClick={handleCollapse} />
         </div>
         <div className="hidden md:block">
-          <LogoutButton />
+          <LogoutButton onClick={handleLogout} />
         </div>
       </div>
       <div

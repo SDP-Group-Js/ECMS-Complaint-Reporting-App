@@ -30,9 +30,42 @@ export default function RegisterForm() {
     }
 
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      // Check if user already exists
+      const SERVER_URL = "http://localhost:8080";
+      const nicResponse = await fetch(
+        `${SERVER_URL}/api/user/publicUsers/${nic}/exists`,
+      );
+      const data = await nicResponse.json();
+      const userExists = data.publicUserWithNicExists;
+      if (userExists)
+        throw new Error("There already exists a user with this NIC.");
+      alert("User does not exist. Creating new account...");
+      //Register with Firebase
+      const registration = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      const userId = registration.user.uid;
+      alert("User created. Registering with server...");
+      //Register with server
+      const userName = name;
+      const userNIC = nic;
+      const userPhone = phoneNumber;
+      const body = JSON.stringify({ userId, userNIC, userName, userPhone });
+      console.log(body);
+      const createResponse = await fetch(`${SERVER_URL}/api/user/publicUsers`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: body,
+      });
+      if (!createResponse.ok) throw new Error("Failed to create an account.");
+
+      //Finish registration
       alert("Registration Complete!");
-      router.push("../report-complaint");
+      router.push("./report-complaint");
     } catch (error: any) {
       alert(error.message);
     }

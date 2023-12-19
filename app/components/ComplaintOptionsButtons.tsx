@@ -19,14 +19,14 @@ const Button = () => {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
+    <div className="flex flex-col items-center justify-center">
       {complaintTypeCard(
         fixedWidthStyle,
         iconStyle,
         textWithSpaceStyle,
         "Forestry Complaint",
         <MdOutlineForest />,
-        "../submit-forestry-complaint"
+        "../submit-forestry-complaint",
       )}
 
       {complaintTypeCard(
@@ -35,7 +35,7 @@ const Button = () => {
         textWithSpaceStyle,
         "Wildlife Complaint",
         <LuBird />,
-        "../submit-wildlife-complaint"
+        "../submit-wildlife-complaint",
       )}
 
       {complaintTypeCard(
@@ -44,7 +44,7 @@ const Button = () => {
         textWithSpaceStyle,
         "General Complaint",
         <TiLeaf />,
-        "../submit-general-complaint"
+        "../submit-general-complaint",
       )}
     </div>
   );
@@ -57,13 +57,13 @@ function complaintTypeCard(
   textWithSpaceStyle: { marginRight: string },
   content: string,
   icon: React.ReactNode,
-  link: string
+  link: string,
 ) {
   return (
     <button style={fixedWidthStyle}>
       <Link
         href={link}
-        className='flex items-center text-md font-bold text-black md:text-xl lg:text-xl rounded-md border border-black hover:border-slate-400 p-4 my-2'
+        className="text-md my-2 flex items-center rounded-md border border-black p-4 font-bold text-black hover:border-slate-400 md:text-xl lg:text-xl"
       >
         {icon &&
           React.cloneElement(icon as React.ReactElement, { style: iconStyle })}
