@@ -51,6 +51,7 @@ const SubmitComplaintForm = () => {
       complaintDescription,
       complainerId,
     });
+    alert(body);
     const response = await fetch(`${SERVER_URL}/api/complaint`, {
       method: "POST",
       headers: {

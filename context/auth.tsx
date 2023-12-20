@@ -1,40 +1,65 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "@/config/firebase";
 import LoginForm from "@/app/components/LoginForm";
 import RegisterForm from "@/app/components/RegisterForm";
 
 export const AuthContext = createContext({
+  userId: null as string | null,
   user: null,
-  loading: false,
+  loading: true,
+  complaints: [] as any[], // Initialize complaints as an empty array
 });
 
 export const AuthProvider = ({ children }: any) => {
+  const [userId, setUserId] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [complaints, setComplaints] = useState<any[]>([]);
 
   const API_URL = "http://localhost:8080";
 
-  onAuthStateChanged(auth, async (user) => {
-    if (user) {
-      // User is signed in, see docs for a list of available properties
-      // https://firebase.google.com/docs/reference/js/auth.user
-      const uid = user.uid;
+  useEffect(() => {
+    const fetchData = async (uid: string) => {
+      try {
+        const response = await fetch(
+          `${API_URL}/api/complaint/userComplaints/${uid}`,
+        );
+        const data = await response.json();
+        setComplaints(data);
+      } catch (error) {
+        console.error("Error fetching complaints:", error);
+        setComplaints([]);
+      }
+    };
 
-      // Need to fetch user details by providing uid
-      // const userDetails = await fetch(`${API_URL}/user/${uid}`)
+    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
+      if (authUser) {
+        const uid = authUser.uid;
 
-      setUser(user);
-      setLoading(false);
-    } else {
-      setUser(null);
-      setLoading(false);
-    }
-  });
+        setUserId(uid);
+        setUser(authUser);
+        setLoading(false);
+
+        // Fetch user complaints
+        fetchData(uid);
+      } else {
+        setUserId(null);
+        setUser(null);
+        setLoading(false);
+        setComplaints([]);
+      }
+    });
+
+    // Cleanup the subscription on component unmount
+    return () => unsubscribe();
+  }, []);
 
   const AuthValues = {
+    userId: userId,
     user: user,
     loading: loading,
+    complaints: complaints,
   };
 
   return (
