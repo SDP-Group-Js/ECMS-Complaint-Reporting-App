@@ -10,7 +10,7 @@ type ComplaintCardProps = {
   complaintTitle: string;
 };
 
-const ComplaintCard = async ({
+const ComplaintCard = ({
   complaintId,
   complaintStatus,
   complaintTitle,

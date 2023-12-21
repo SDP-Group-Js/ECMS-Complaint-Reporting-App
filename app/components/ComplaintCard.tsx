@@ -2,35 +2,24 @@ import React from "react";
 import BlankLine from "./BlankLine";
 import ActionDataRow from "./ActionDataRow";
 import ComplaintStatusTag from "./ComplaintStatusTag";
+import { auth } from "@/config/firebase";
 
 type ComplaintCardProps = {
-  complaintId: number;
+  complaint: any;
 };
 
-const ComplaintCard = async ({ complaintId }: ComplaintCardProps) => {
-  const SERVER_URL = "http://localhost:8080";
-  const response = await fetch(`${SERVER_URL}/api/complaint/${complaintId}`);
-  const complaint = await response.json();
+const ComplaintCard = ({ complaint }: ComplaintCardProps) => {
+  const complaintId = complaint.id;
   const investigation = complaint.investigation;
-  let investigationStages: any;
-  if (!investigation) {
-    investigationStages = "Undefined";
-  } else {
+
+  let investigationStages: any[] = [];
+  if (investigation) {
     investigationStages = investigation.investigationStages;
   }
 
   const getCurrentStatus = (investigation: any): any => {
     if (!investigation) return <ComplaintStatusTag status="Undefined" />;
     else return investigation?.status;
-  };
-
-  const getCurrentStage = (investigation: any): any => {
-    for (const stage of investigation?.investigationStages || []) {
-      if (stage.status === "Ongoing") {
-        return stage;
-      }
-    }
-    return null;
   };
 
   function formatComplaintId(
@@ -63,7 +52,7 @@ const ComplaintCard = async ({ complaintId }: ComplaintCardProps) => {
 
       <BlankLine />
 
-      {investigationStages == "Undefined" ? (
+      {investigationStages.length === 0 ? (
         <div>
           Complaint is still being processed, waiting until an investigation is
           created.
