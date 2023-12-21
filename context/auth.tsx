@@ -1,3 +1,5 @@
+"use client";
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { onAuthStateChanged } from "@firebase/auth";
 import { auth } from "@/config/firebase";
@@ -8,7 +10,7 @@ export const AuthContext = createContext({
   userId: null as string | null,
   user: null,
   loading: true,
-  complaints: [] as any[], // Initialize complaints as an empty array
+  complaints: [] as any[],
 });
 
 export const AuthProvider = ({ children }: any) => {
@@ -20,10 +22,15 @@ export const AuthProvider = ({ children }: any) => {
   const API_URL = "http://localhost:8080";
 
   useEffect(() => {
-    const fetchData = async (uid: string) => {
+    const fetchData = async (uid: string, authToken: string) => {
       try {
         const response = await fetch(
           `${API_URL}/api/complaint/userComplaints/${uid}`,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          },
         );
         const data = await response.json();
         setComplaints(data);
@@ -33,16 +40,17 @@ export const AuthProvider = ({ children }: any) => {
       }
     };
 
-    const unsubscribe = onAuthStateChanged(auth, async (authUser) => {
-      if (authUser) {
-        const uid = authUser.uid;
+    const unsubscribe = onAuthStateChanged(auth, async () => {
+      if (auth.currentUser) {
+        const uid = auth.currentUser.uid;
 
         setUserId(uid);
-        setUser(authUser);
+        setUser(auth.currentUser);
         setLoading(false);
 
-        // Fetch user complaints
-        fetchData(uid);
+        // Fetch user complaints with the authorization token
+        const token = await auth.currentUser.getIdToken();
+        fetchData(uid, token);
       } else {
         setUserId(null);
         setUser(null);
