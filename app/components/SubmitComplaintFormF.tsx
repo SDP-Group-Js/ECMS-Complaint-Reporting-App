@@ -70,7 +70,7 @@ const SubmitComplaintForm = () => {
       "Forestry complaint submitted successfully. Thank you!\nID: " +
         complaintId,
     );
-    //fetchData(userId, await auth.currentUser?.getIdToken());
+    fetchData(userId, await auth.currentUser?.getIdToken());
     router.push(`/view-complaint/${complaintId}`);
   }
 
