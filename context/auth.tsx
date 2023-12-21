@@ -19,51 +19,53 @@ export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [complaints, setComplaints] = useState<any[]>([]);
-  const [fetchData, setFetchData] = useState<any>(null);
 
-  const API_URL = "http://localhost:8080";
+  const fetchData = async (
+    uid: string | null,
+    authToken: string | undefined,
+  ) => {
+    const API_URL = "http://localhost:8080";
+    try {
+      const response = await fetch(
+        `${API_URL}/api/complaint/userComplaints/${uid}`,
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        },
+      );
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      console.error("Error fetching complaints:", error);
+      return [];
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async (uid: string, authToken: string) => {
-      try {
-        const response = await fetch(
-          `${API_URL}/api/complaint/userComplaints/${uid}`,
-          {
-            headers: {
-              Authorization: `Bearer ${authToken}`,
-            },
-          },
-        );
-        const data = await response.json();
-        setComplaints(data);
-      } catch (error) {
-        console.error("Error fetching complaints:", error);
-        setComplaints([]);
-      }
+    const setupAuthStateListener = async () => {
+      const unsubscribe = onAuthStateChanged(auth, async () => {
+        if (auth.currentUser) {
+          const uid = auth.currentUser.uid;
+          setUserId(uid);
+          setUser(auth.currentUser);
+          setLoading(false);
+
+          const token = await auth.currentUser.getIdToken();
+          const data = await fetchData(uid, token);
+          setComplaints(data);
+        } else {
+          setUserId(null);
+          setUser(null);
+          setLoading(false);
+          setComplaints([]);
+        }
+      });
+
+      return () => unsubscribe();
     };
 
-    const unsubscribe = onAuthStateChanged(auth, async () => {
-      if (auth.currentUser) {
-        const uid = auth.currentUser.uid;
-
-        setUserId(uid);
-        setUser(auth.currentUser);
-        setLoading(false);
-        setFetchData(fetchData);
-        // Fetch user complaints with the authorization token
-        const token = await auth.currentUser.getIdToken();
-        fetchData(uid, token);
-      } else {
-        setUserId(null);
-        setUser(null);
-        setLoading(false);
-        setComplaints([]);
-        setFetchData(null);
-      }
-    });
-
-    // Cleanup the subscription on component unmount
-    return () => unsubscribe();
+    setupAuthStateListener();
   }, []);
 
   const AuthValues = {
