@@ -11,6 +11,7 @@ export const AuthContext = createContext({
   user: null,
   loading: true,
   complaints: [] as any[],
+  fetchData: async (uid: string | null, authToken: string | undefined) => {},
 });
 
 export const AuthProvider = ({ children }: any) => {
@@ -18,6 +19,7 @@ export const AuthProvider = ({ children }: any) => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [complaints, setComplaints] = useState<any[]>([]);
+  const [fetchData, setFetchData] = useState<any>(null);
 
   const API_URL = "http://localhost:8080";
 
@@ -47,7 +49,7 @@ export const AuthProvider = ({ children }: any) => {
         setUserId(uid);
         setUser(auth.currentUser);
         setLoading(false);
-
+        setFetchData(fetchData);
         // Fetch user complaints with the authorization token
         const token = await auth.currentUser.getIdToken();
         fetchData(uid, token);
@@ -56,6 +58,7 @@ export const AuthProvider = ({ children }: any) => {
         setUser(null);
         setLoading(false);
         setComplaints([]);
+        setFetchData(null);
       }
     });
 
@@ -68,6 +71,7 @@ export const AuthProvider = ({ children }: any) => {
     user: user,
     loading: loading,
     complaints: complaints,
+    fetchData: fetchData,
   };
 
   return (

@@ -12,6 +12,7 @@ import { v4 } from "uuid";
 import { MdOutlineForest } from "react-icons/md";
 import ComplaintTitleInputField from "./ComplaintTitleInputField";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth";
 
 const SubmitComplaintForm = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,8 @@ const SubmitComplaintForm = () => {
   const [title, setTitle] = useState("Forestry Complaint");
   const [description, setDescription] = useState("");
   const [complaintId, setComplaintId] = useState(0);
+
+  const { user, userId, fetchData } = useAuth();
 
   const router = useRouter();
 
@@ -51,11 +54,11 @@ const SubmitComplaintForm = () => {
       complaintDescription,
       complainerId,
     });
-    alert(body);
     const response = await fetch(`${SERVER_URL}/api/complaint`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${await auth.currentUser?.getIdToken()}`,
       },
       body: body,
     });
@@ -67,6 +70,7 @@ const SubmitComplaintForm = () => {
       "Forestry complaint submitted successfully. Thank you!\nID: " +
         complaintId,
     );
+    //fetchData(userId, await auth.currentUser?.getIdToken());
     router.push(`/view-complaint/${complaintId}`);
   }
 

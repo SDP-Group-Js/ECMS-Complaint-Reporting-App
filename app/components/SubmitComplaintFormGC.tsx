@@ -12,6 +12,7 @@ import { v4 } from "uuid";
 import { TiLeaf } from "react-icons/ti";
 import ComplaintTitleInputField from "./ComplaintTitleInputField";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth";
 
 const SubmitComplaintForm = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -20,6 +21,7 @@ const SubmitComplaintForm = () => {
   const [title, setTitle] = useState("General Complaint");
   const [description, setDescription] = useState("");
   const [complaintId, setComplaintId] = useState(0);
+  const { user, userId, fetchData } = useAuth();
 
   const router = useRouter();
 
@@ -55,6 +57,7 @@ const SubmitComplaintForm = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${await auth.currentUser?.getIdToken()}`,
       },
       body: body,
     });
@@ -66,10 +69,8 @@ const SubmitComplaintForm = () => {
       "General complaint submitted successfully. Thank you!\nID: " +
         complaintId,
     );
+    //fetchData(userId, await auth.currentUser?.getIdToken());
     router.push(`/view-complaint/${complaintId}`);
-
-    uploadImages(complaintId);
-    setModalVisible(false);
   }
 
   function uploadImages(complaintId: number) {
