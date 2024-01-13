@@ -64,8 +64,8 @@ const ComplaintCard = ({ complaint }: ComplaintCardProps) => {
               {stage.name}
             </h3>
             <BlankLine />
-            {stage.actions.map((action: any) => (
-              <div className="mx-1 flex items-center justify-start">
+            {stage.actions.map((action: any, index: number) => (
+              <div className="mx-1 flex items-center justify-start" key={index}>
                 <ActionDataRow actionId={action.id} actionName={action.name} />
               </div>
             ))}

@@ -18,7 +18,7 @@ export default function LoginForm() {
     if (user) {
       router.push("../report-complaint");
     }
-  }, []);
+  }, [router]);
 
   const login = async (e: any) => {
     e.preventDefault();
@@ -67,8 +67,8 @@ export default function LoginForm() {
             className="mt-3 flex justify-center text-right text-sm"
             href={"../register"}
           >
-            Don't have an account?&nbsp;
-            <span className="underline">Register</span>
+            Don&apos;t have an account?&nbsp;
+            <span className="underline"> Register</span>
           </Link>
         </form>
       </div>
